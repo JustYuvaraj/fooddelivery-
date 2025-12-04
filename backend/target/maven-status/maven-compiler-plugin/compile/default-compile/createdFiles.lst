@@ -9,6 +9,7 @@ com\fooddelivery\service\RestaurantService.class
 com\fooddelivery\repository\ProductRepository.class
 com\fooddelivery\service\OrderService.class
 com\fooddelivery\model\entity\User.class
+com\fooddelivery\controller\WebSocketController$OrderStatusUpdate.class
 com\fooddelivery\dto\request\LoginRequest.class
 com\fooddelivery\exception\RestaurantNotFoundException.class
 com\fooddelivery\model\entity\UserAddress.class
@@ -18,10 +19,12 @@ com\fooddelivery\repository\DeliveryAssignmentRepository.class
 com\fooddelivery\model\enums\OrderStatus.class
 com\fooddelivery\dto\response\ProductDTO$ProductDTOBuilder.class
 com\fooddelivery\dto\request\RegisterRequest.class
+com\fooddelivery\controller\WebSocketController.class
 com\fooddelivery\dto\response\DeliveryAssignmentDTO$DeliveryAssignmentDTOBuilder.class
 com\fooddelivery\dto\response\OrderItemDTO$OrderItemDTOBuilder.class
 com\fooddelivery\model\entity\Product$ProductBuilder.class
 com\fooddelivery\dto\response\RestaurantDTO$RestaurantDTOBuilder.class
+com\fooddelivery\config\RedisConfig.class
 com\fooddelivery\controller\DeliveryController.class
 com\fooddelivery\security\CustomUserDetails.class
 com\fooddelivery\FoodDeliveryApplication.class
@@ -36,6 +39,8 @@ com\fooddelivery\dto\response\ProductDTO.class
 com\fooddelivery\repository\RestaurantRepository.class
 com\fooddelivery\dto\response\AuthResponse.class
 com\fooddelivery\dto\response\OrderDTO.class
+com\fooddelivery\controller\WebSocketController$DeliveryLocationUpdate.class
+com\fooddelivery\controller\WebSocketController$DeliveryLocationUpdate$DeliveryLocationUpdateBuilder.class
 com\fooddelivery\dto\response\OrderDTO$OrderDTOBuilder.class
 com\fooddelivery\dto\response\OrderItemDTO.class
 com\fooddelivery\security\CustomUserDetailsService.class
@@ -64,7 +69,9 @@ com\fooddelivery\model\entity\Product.class
 com\fooddelivery\config\SecurityConfig.class
 com\fooddelivery\dto\response\AuthResponse$AuthResponseBuilder.class
 com\fooddelivery\model\entity\Restaurant.class
+com\fooddelivery\config\WebSocketConfig.class
 com\fooddelivery\model\entity\UserAddress$UserAddressBuilder.class
 com\fooddelivery\repository\OrderRepository.class
 com\fooddelivery\service\OrderService$OrderPlacedEvent.class
+com\fooddelivery\controller\WebSocketController$OrderStatusUpdate$OrderStatusUpdateBuilder.class
 com\fooddelivery\repository\UserAddressRepository.class
