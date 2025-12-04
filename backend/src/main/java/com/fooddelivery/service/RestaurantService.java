@@ -53,7 +53,7 @@ public class RestaurantService {
      * Search restaurants by cuisine type
      */
     @Transactional(readOnly = true)
-    public Page<RestaurantDTO> searchByyCuisine(String cuisineType, Pageable pageable) {
+    public Page<RestaurantDTO> searchByCuisine(String cuisineType, Pageable pageable) {
         log.info("Searching restaurants by cuisine: {}", cuisineType);
         return restaurantRepository.findByIsActiveTrueAndCuisineTypeContainingIgnoreCase(cuisineType, pageable)
                 .map(this::mapToDTO);
@@ -73,43 +73,37 @@ public class RestaurantService {
      * Get menu items (products) for a restaurant
      */
     @Transactional(readOnly = true)
-    public List<ProductDTO> getRestaurantMenu(Long restaurantId) {
+    public Page<ProductDTO> getRestaurantMenu(Long restaurantId, Pageable pageable) {
         log.info("Fetching menu for restaurant: {}", restaurantId);
 
         // Verify restaurant exists
         restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new ResourceNotFoundException("Restaurant not found with ID: " + restaurantId));
 
-        List<Product> products = productRepository.findByRestaurantIdAndIsAvailableTrue(restaurantId);
-        return products.stream()
-                .map(this::mapProductToDTO)
-                .collect(Collectors.toList());
+        return productRepository.findByRestaurantIdAndIsAvailableTrue(restaurantId, pageable)
+                .map(this::mapProductToDTO);
     }
 
     /**
      * Get menu items by category
      */
     @Transactional(readOnly = true)
-    public List<ProductDTO> getRestaurantMenuByCategory(Long restaurantId, String category) {
+    public Page<ProductDTO> getRestaurantMenuByCategory(Long restaurantId, String category, Pageable pageable) {
         log.info("Fetching {} items for restaurant: {}", category, restaurantId);
 
-        List<Product> products = productRepository
-                .findByRestaurantIdAndCategoryAndIsAvailableTrue(restaurantId, category);
-
-        return products.stream()
-                .map(this::mapProductToDTO)
-                .collect(Collectors.toList());
+        return productRepository
+                .findByRestaurantIdAndCategoryAndIsAvailableTrue(restaurantId, category, pageable)
+                .map(this::mapProductToDTO);
     }
 
     /**
      * Get top-rated restaurants
      */
     @Transactional(readOnly = true)
-    public List<RestaurantDTO> getTopRatedRestaurants(int limit) {
+    public Page<RestaurantDTO> getTopRatedRestaurants(int limit, Pageable pageable) {
         log.info("Fetching top {} rated restaurants", limit);
-        return restaurantRepository.findTopRatedRestaurants(limit).stream()
-                .map(this::mapToDTO)
-                .collect(Collectors.toList());
+        return restaurantRepository.findTopRatedRestaurants(limit, pageable)
+                .map(this::mapToDTO);
     }
 
     /**
@@ -132,22 +126,29 @@ public class RestaurantService {
      * Search nearby restaurants
      */
     @Transactional(readOnly = true)
-    public List<RestaurantDTO> getNearbyRestaurants(Double latitude, Double longitude, Double radiusKm) {
+    public Page<RestaurantDTO> getNearbyRestaurants(java.math.BigDecimal latitude, java.math.BigDecimal longitude, Double radiusKm, Pageable pageable) {
         log.info("Searching restaurants near lat: {}, lon: {}, radius: {}km", latitude, longitude, radiusKm);
 
         // Using simple distance calculation (Haversine formula)
         // In production, use PostGIS or database geo-spatial queries
         List<Restaurant> allRestaurants = restaurantRepository.findByIsActiveTrue();
 
-        return allRestaurants.stream()
-                .filter(r -> calculateDistance(latitude, longitude, r.getLatitude(), r.getLongitude()) <= radiusKm)
+        List<RestaurantDTO> filtered = allRestaurants.stream()
+                .filter(r -> calculateDistance(latitude.doubleValue(), longitude.doubleValue(), r.getLatitude(), r.getLongitude()) <= radiusKm)
                 .sorted((r1, r2) -> {
-                    double dist1 = calculateDistance(latitude, longitude, r1.getLatitude(), r1.getLongitude());
-                    double dist2 = calculateDistance(latitude, longitude, r2.getLatitude(), r2.getLongitude());
+                    double dist1 = calculateDistance(latitude.doubleValue(), longitude.doubleValue(), r1.getLatitude(), r1.getLongitude());
+                    double dist2 = calculateDistance(latitude.doubleValue(), longitude.doubleValue(), r2.getLatitude(), r2.getLongitude());
                     return Double.compare(dist1, dist2);
                 })
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
+
+        // Apply pagination manually on sorted list
+        int start = (int) pageable.getOffset();
+        int end = Math.min(start + pageable.getPageSize(), filtered.size());
+        List<RestaurantDTO> pageContent = filtered.subList(start, end);
+
+        return new org.springframework.data.domain.PageImpl<>(pageContent, pageable, filtered.size());
     }
 
     /**

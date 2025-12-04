@@ -309,6 +309,44 @@ public class DeliveryAssignmentService {
     }
 
     /**
+     * Get agent's assignments by status
+     */
+    @Transactional(readOnly = true)
+    public Page<DeliveryAssignmentDTO> getAgentAssignmentsByStatus(Long agentId, AssignmentStatus status, Pageable pageable) {
+        log.info("Fetching assignments for agent: {} with status: {}", agentId, status);
+
+        return deliveryAssignmentRepository
+                .findByDeliveryAgentIdAndStatusInOrderByAssignedAtDesc(
+                        agentId,
+                        Collections.singletonList(status),
+                        pageable
+                )
+                .map(this::mapToDTO);
+    }
+
+    /**
+     * Update agent's current location
+     */
+    @Transactional
+    public void updateAgentLocation(Long agentId, Double latitude, Double longitude) {
+        log.info("Updating location for agent: {} to ({}, {})", agentId, latitude, longitude);
+
+        // Verify agent exists
+        userRepository.findById(agentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Agent not found with ID: " + agentId));
+
+        AgentLocation location = AgentLocation.builder()
+                .agentId(agentId)
+                .latitude(latitude)
+                .longitude(longitude)
+                .isOnline(true)
+                .build();
+
+        agentLocationRepository.save(location);
+        log.info("Location updated for agent: {}", agentId);
+    }
+
+    /**
      * Get current active delivery count for agent
      */
     private int getActiveDeliveryCount(Long agentId) {

@@ -1,5 +1,6 @@
 com\fooddelivery\dto\response\DeliveryAssignmentDTO.class
 com\fooddelivery\exception\GlobalExceptionHandler.class
+com\fooddelivery\controller\RestaurantController.class
 com\fooddelivery\model\entity\OrderItem.class
 com\fooddelivery\exception\UnauthorizedAccessException.class
 com\fooddelivery\model\entity\DeliveryAssignment$DeliveryAssignmentBuilder.class
@@ -21,6 +22,7 @@ com\fooddelivery\dto\response\DeliveryAssignmentDTO$DeliveryAssignmentDTOBuilder
 com\fooddelivery\dto\response\OrderItemDTO$OrderItemDTOBuilder.class
 com\fooddelivery\model\entity\Product$ProductBuilder.class
 com\fooddelivery\dto\response\RestaurantDTO$RestaurantDTOBuilder.class
+com\fooddelivery\controller\DeliveryController.class
 com\fooddelivery\security\CustomUserDetails.class
 com\fooddelivery\FoodDeliveryApplication.class
 com\fooddelivery\repository\UserRepository.class
@@ -41,6 +43,7 @@ com\fooddelivery\model\entity\User$UserBuilder.class
 com\fooddelivery\dto\request\OrderItemRequest.class
 com\fooddelivery\security\JwtAuthenticationFilter.class
 com\fooddelivery\model\entity\AgentLocation$AgentLocationBuilder.class
+com\fooddelivery\controller\OrderController.class
 com\fooddelivery\model\enums\AssignmentStatus.class
 com\fooddelivery\service\OrderService$OrderStatusChangedEvent.class
 com\fooddelivery\dto\response\LocationUpdateDTO$LocationUpdateDTOBuilder.class

@@ -27,8 +27,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findByIsActiveTrueAndNameContainingIgnoreCase(String name, Pageable pageable);
     
     @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
-           "AND r.isAcceptingOrders = true ORDER BY r.rating DESC LIMIT :limit")
+           "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")
     List<Restaurant> findTopRatedRestaurants(@Param("limit") int limit);
+    
+    @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
+           "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")
+    Page<Restaurant> findTopRatedRestaurants(@Param("limit") int limit, Pageable pageable);
     
     @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
            "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")
