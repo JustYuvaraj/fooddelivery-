@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -18,6 +17,6 @@ public class UpdateLocationRequest {
     @NotNull(message = "Longitude cannot be null")
     private Double longitude;
     
-    @DecimalMin("0", message = "Accuracy must be non-negative")
+    @DecimalMin(value = "0", message = "Accuracy must be non-negative")
     private Double accuracy;
 }

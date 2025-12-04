@@ -1,59 +1,59 @@
 package com.fooddelivery.security;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Component
 public class JwtTokenProvider {
     
-    @Value("${jwt.secret:your-secret-key-change-this-in-production}")
+    @Value("${jwt.secret:your-super-secret-key-change-this-in-production-at-least-256-bits}")
     private String jwtSecret;
     
     @Value("${jwt.expiration:86400000}")
     private long jwtExpirationMs;
     
+    private SecretKey getSigningKey() {
+        byte[] keyBytes = jwtSecret.getBytes();
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+    
     public String generateToken(Authentication authentication) {
-        Map<String, Object> claims = new HashMap<>();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         
-        claims.put("role", userDetails.getRole());
-        claims.put("userId", userDetails.getId());
-        
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .claim("role", userDetails.getRole())
+                .claim("userId", userDetails.getId())
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(getSigningKey())
                 .compact();
     }
     
     public String generateTokenFromUsername(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .subject(username)
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .signWith(getSigningKey())
                 .compact();
     }
     
     public String getUsernameFromToken(String token) {
         try {
             return Jwts.parser()
-                    .setSigningKey(jwtSecret)
-                    .parseClaimsJws(token)
-                    .getBody()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
                     .getSubject();
         } catch (JwtException e) {
             log.error("Error parsing JWT token: {}", e.getMessage());
@@ -64,9 +64,10 @@ public class JwtTokenProvider {
     public Long getUserIdFromToken(String token) {
         try {
             return Jwts.parser()
-                    .setSigningKey(jwtSecret)
-                    .parseClaimsJws(token)
-                    .getBody()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
                     .get("userId", Long.class);
         } catch (JwtException e) {
             log.error("Error parsing JWT token: {}", e.getMessage());
@@ -77,9 +78,10 @@ public class JwtTokenProvider {
     public String getRoleFromToken(String token) {
         try {
             return Jwts.parser()
-                    .setSigningKey(jwtSecret)
-                    .parseClaimsJws(token)
-                    .getBody()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload()
                     .get("role", String.class);
         } catch (JwtException e) {
             log.error("Error parsing JWT token: {}", e.getMessage());
@@ -89,7 +91,10 @@ public class JwtTokenProvider {
     
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            Jwts.parser()
+                    .verifyWith(getSigningKey())
+                    .build()
+                    .parseSignedClaims(token);
             return true;
         } catch (SecurityException e) {
             log.error("Invalid JWT signature: {}", e.getMessage());
