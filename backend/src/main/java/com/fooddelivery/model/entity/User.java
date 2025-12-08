@@ -63,7 +63,7 @@ public class User {
     private LocalDateTime updatedAt;
     
     // Average rating (calculated from reviews)
-    @Column(precision = 3, scale = 2)
+    @Column
     @Builder.Default
     private Double averageRating = 0.0;
     

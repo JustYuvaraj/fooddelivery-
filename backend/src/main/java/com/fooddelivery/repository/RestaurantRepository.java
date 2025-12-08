@@ -5,11 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
@@ -25,14 +23,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     Page<Restaurant> findByIsActiveTrueAndCuisineTypeContainingIgnoreCase(String cuisineType, Pageable pageable);
     
     Page<Restaurant> findByIsActiveTrueAndNameContainingIgnoreCase(String name, Pageable pageable);
-    
-    @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
-           "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")
-    List<Restaurant> findTopRatedRestaurants(@Param("limit") int limit);
-    
-    @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
-           "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")
-    Page<Restaurant> findTopRatedRestaurants(@Param("limit") int limit, Pageable pageable);
+
+    Page<Restaurant> findByIsActiveTrueAndIsAcceptingOrdersTrue(Pageable pageable);
     
     @Query("SELECT r FROM Restaurant r WHERE r.isActive = true " +
            "AND r.isAcceptingOrders = true ORDER BY r.rating DESC")

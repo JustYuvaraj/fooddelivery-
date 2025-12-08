@@ -3,7 +3,6 @@ package com.fooddelivery.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -43,10 +42,10 @@ public class UserAddress {
     @Column(nullable = false, length = 20)
     private String postalCode;
     
-    @Column(nullable = false, precision = 10, scale = 8)
+    @Column(nullable = false)
     private Double latitude;
     
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double longitude;
     
     @Column(nullable = false)

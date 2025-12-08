@@ -24,13 +24,13 @@ public class AgentLocation {
     @Column(nullable = false)
     private Long agentId;
     
-    @Column(nullable = false, precision = 10, scale = 8)
+    @Column(nullable = false)
     private Double latitude;
     
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double longitude;
     
-    @Column(precision = 8, scale = 2)
+    @Column
     private Double accuracyMeters;
     
     @Column(nullable = false)

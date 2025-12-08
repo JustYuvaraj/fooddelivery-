@@ -48,10 +48,10 @@ public class Order {
     @JoinColumn(name = "delivery_address_id")
     private UserAddress deliveryAddress;
     
-    @Column(nullable = false, precision = 10, scale = 8)
+    @Column(nullable = false)
     private Double deliveryLatitude;
     
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double deliveryLongitude;
     
     @Enumerated(EnumType.STRING)

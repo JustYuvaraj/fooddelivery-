@@ -5,14 +5,14 @@ spring:
   # DataSource Configuration
   datasource:
     url: jdbc:postgresql://localhost:5432/fooddelivery
-    username: postgres
-    password: postgres
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
   
   # JPA Configuration
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:

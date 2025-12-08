@@ -39,10 +39,10 @@ public class Restaurant {
     @Column(nullable = false, length = 500)
     private String address;
     
-    @Column(nullable = false, precision = 10, scale = 8)
+    @Column(nullable = false)
     private Double latitude;
     
-    @Column(nullable = false, precision = 11, scale = 8)
+    @Column(nullable = false)
     private Double longitude;
     
     @Column(nullable = false, length = 20)
@@ -61,15 +61,15 @@ public class Restaurant {
     @Builder.Default
     private Integer prepTimeMinutes = 30;
     
-    @Column(precision = 10, scale = 2)
+    @Column
     @Builder.Default
     private Double minOrderAmount = 0.0;
     
-    @Column(precision = 5, scale = 2)
+    @Column
     @Builder.Default
     private Double deliveryRadiusKm = 5.0;
     
-    @Column(precision = 3, scale = 2)
+    @Column
     @Builder.Default
     private Double rating = 0.0;
     
