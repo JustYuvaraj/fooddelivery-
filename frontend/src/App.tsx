@@ -1,5 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { Search, MapPin, Star, Clock, ShoppingCart, User, Bell, Heart, Package, Home, Plus, Minus, ChevronRight, DollarSign, LogOut, Settings, History, Phone } from 'lucide-react';
+import MarketingLanding from '@/components/marketing/MarketingLanding';
 
 // ============================================================================
 // CONTEXT & STATE MANAGEMENT
@@ -280,6 +281,7 @@ export default function FoodDeliveryApp() {
   const [token, setToken] = useState<string | null>(null);
   const [currentView, setCurrentView] = useState<string>('home');
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [showMarketing, setShowMarketing] = useState<boolean>(true);
 
   useEffect(() => {
     // Check for existing token on mount
@@ -353,7 +355,11 @@ export default function FoodDeliveryApp() {
   if (!token) {
     return (
       <AuthContext.Provider value={authContextValue}>
-        <AuthScreen />
+        {showMarketing ? (
+          <MarketingLanding onSignInClick={() => setShowMarketing(false)} />
+        ) : (
+          <AuthScreen />
+        )}
       </AuthContext.Provider>
     );
   }

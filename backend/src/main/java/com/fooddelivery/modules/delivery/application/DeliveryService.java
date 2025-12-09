@@ -6,7 +6,7 @@ import com.fooddelivery.model.entity.DeliveryAssignment;
 import com.fooddelivery.model.entity.Order;
 import com.fooddelivery.model.enums.AssignmentStatus;
 import com.fooddelivery.model.enums.OrderStatus;
-import com.fooddelivery.repository.OrderRepository;
+import com.fooddelivery.modules.order.infra.OrderRepository;
 import com.fooddelivery.exception.ResourceNotFoundException;
 import com.fooddelivery.exception.UnauthorizedAccessException;
 import lombok.RequiredArgsConstructor;

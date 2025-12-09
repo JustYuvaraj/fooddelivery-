@@ -11,7 +11,7 @@ import com.fooddelivery.model.entity.UserAddress;
 import com.fooddelivery.model.enums.OrderStatus;
 import com.fooddelivery.repository.UserRepository;
 import com.fooddelivery.repository.UserAddressRepository;
-import com.fooddelivery.repository.OrderRepository;
+import com.fooddelivery.modules.order.infra.OrderRepository;
 import com.fooddelivery.exception.ResourceNotFoundException;
 import com.fooddelivery.exception.UnauthorizedAccessException;
 import lombok.RequiredArgsConstructor;
