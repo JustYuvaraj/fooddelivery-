@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import restaurantService from '@/services/restaurant.service';
 import { useCart } from '@/contexts/CartContext';
 import { Restaurant, Product } from '@/types/api.types';
@@ -9,12 +9,13 @@ import Button from '@/components/common/Button';
 
 const RestaurantDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { addItem, restaurantId, clearCart } = useCart();
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const [menu, setMenu] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [vegOnly, setVegOnly] = useState<boolean>(false);
 
   useEffect(() => {
     if (id) {
@@ -65,9 +66,17 @@ const RestaurantDetailPage = () => {
 
   const categories = Array.from(new Set(menu.map((item) => item.category)));
 
-  const filteredMenu = selectedCategory
-    ? menu.filter((item) => item.category === selectedCategory)
-    : menu;
+  const filteredMenu = menu.filter((item) => {
+    const matchesCategory = selectedCategory ? item.category === selectedCategory : true;
+    const matchesVeg = vegOnly ? !!item.isVeg : true;
+    const lowerName = item.name.toLowerCase();
+    const lowerDesc = (item.description || '').toLowerCase();
+    const matchesSearch = searchTerm
+      ? lowerName.includes(searchTerm.toLowerCase()) ||
+        lowerDesc.includes(searchTerm.toLowerCase())
+      : true;
+    return matchesCategory && matchesVeg && matchesSearch;
+  });
 
   if (loading || !restaurant) {
     return (
@@ -159,6 +168,28 @@ const RestaurantDetailPage = () => {
           ))}
         </div>
       )}
+
+      {/* Search & dietary filters */}
+      <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="flex-1">
+          <input
+            type="text"
+            placeholder="Search dishes..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          />
+        </div>
+        <label className="inline-flex items-center gap-2 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            checked={vegOnly}
+            onChange={(e) => setVegOnly(e.target.checked)}
+            className="w-4 h-4 text-primary-600"
+          />
+          Veg only
+        </label>
+      </div>
 
       {/* Menu */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

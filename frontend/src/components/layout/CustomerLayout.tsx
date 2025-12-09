@@ -32,8 +32,8 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children }) => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/customer" className="flex items-center gap-2 text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors">
-              <span>🍔</span>
-              <span className="hidden sm:inline">FoodHub</span>
+              <span>🍽️</span>
+              <span className="hidden sm:inline">Home Kitchen</span>
             </Link>
             
             {/* Desktop Navigation */}
@@ -145,8 +145,8 @@ const CustomerLayout: React.FC<CustomerLayoutProps> = ({ children }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="text-white font-bold mb-4">FoodHub</h3>
-              <p className="text-sm">Fast, reliable food delivery service.</p>
+              <h3 className="text-white font-bold mb-4">Home Kitchen</h3>
+              <p className="text-sm">Delicious home-cooked meals from our kitchen to yours.</p>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Quick Links</h4>

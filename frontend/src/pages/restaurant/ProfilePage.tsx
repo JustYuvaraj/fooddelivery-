@@ -52,8 +52,9 @@ const ProfilePage = () => {
   };
 
   const handleUpdate = async () => {
+    if (!restaurant) return;
     try {
-      const updated = await restaurantOwnerService.updateProfile({
+      const updated = await restaurantOwnerService.updateProfile(restaurant.id, {
         ...formData,
         minOrderAmount: formData.minOrderAmount ? Number(formData.minOrderAmount) : undefined,
         deliveryRadiusKm: formData.deliveryRadiusKm ? Number(formData.deliveryRadiusKm) : undefined,
@@ -69,7 +70,10 @@ const ProfilePage = () => {
   const handleToggleOrderAcceptance = async () => {
     if (!restaurant) return;
     try {
-      const updated = await restaurantOwnerService.updateStatus(!restaurant.isAcceptingOrders);
+      const updated = await restaurantOwnerService.updateStatus(
+        restaurant.id,
+        !restaurant.isAcceptingOrders
+      );
       setRestaurant(updated);
       toast.success(`Now ${updated.isAcceptingOrders ? 'accepting' : 'not accepting'} orders`);
     } catch (error: any) {

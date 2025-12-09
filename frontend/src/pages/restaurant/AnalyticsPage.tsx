@@ -4,7 +4,7 @@ import { FiTrendingUp, FiPackage, FiDollarSign } from 'react-icons/fi';
 
 const AnalyticsPage = () => {
   const [stats, setStats] = useState<any>(null);
-  const [salesReport, setSalesReport] = useState<any[]>([]);
+  const [, setSalesReport] = useState<any[]>([]);
   const [topItems, setTopItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState({

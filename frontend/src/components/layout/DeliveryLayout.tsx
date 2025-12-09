@@ -9,7 +9,7 @@ interface DeliveryLayoutProps {
 }
 
 const DeliveryLayout: React.FC<DeliveryLayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {

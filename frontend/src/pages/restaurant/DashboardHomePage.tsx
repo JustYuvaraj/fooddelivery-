@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import restaurantOwnerService from '@/services/restaurant-owner.service';
-import orderService from '@/services/order.service';
 import { Restaurant } from '@/types/api.types';
 import { FiPackage, FiTrendingUp, FiClock, FiCheckCircle } from 'react-icons/fi';
 

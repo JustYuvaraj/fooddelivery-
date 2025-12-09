@@ -38,45 +38,45 @@ export interface UpdateRestaurantRequest {
 class RestaurantOwnerService {
   // Profile Management
   async getProfile(): Promise<Restaurant> {
-    const response = await apiClient.get('/restaurant/profile');
+    const response = await apiClient.get('/restaurants/owner/profile');
     return response.data;
   }
 
-  async updateProfile(data: UpdateRestaurantRequest): Promise<Restaurant> {
-    const response = await apiClient.put('/restaurant/profile', data);
+  async updateProfile(restaurantId: number, data: UpdateRestaurantRequest): Promise<Restaurant> {
+    const response = await apiClient.put(`/restaurants/${restaurantId}/profile`, data);
     return response.data;
   }
 
-  async updateStatus(accepting: boolean): Promise<Restaurant> {
-    const response = await apiClient.put('/restaurant/status', null, {
-      params: { accepting },
+  async updateStatus(restaurantId: number, isAcceptingOrders: boolean): Promise<Restaurant> {
+    const response = await apiClient.patch(`/restaurants/${restaurantId}/status`, null, {
+      params: { isAcceptingOrders },
     });
     return response.data;
   }
 
   // Menu Management
-  async getProducts(): Promise<Product[]> {
-    const response = await apiClient.get('/restaurant/products');
+  async getProducts(restaurantId: number): Promise<Product[]> {
+    const response = await apiClient.get(`/restaurants/${restaurantId}/products`);
     return response.data;
   }
 
-  async createProduct(data: CreateProductRequest): Promise<Product> {
-    const response = await apiClient.post('/restaurant/products', data);
+  async createProduct(restaurantId: number, data: CreateProductRequest): Promise<Product> {
+    const response = await apiClient.post(`/restaurants/${restaurantId}/products`, data);
     return response.data;
   }
 
   async updateProduct(productId: number, data: UpdateProductRequest): Promise<Product> {
-    const response = await apiClient.put(`/restaurant/products/${productId}`, data);
+    const response = await apiClient.put(`/restaurants/products/${productId}`, data);
     return response.data;
   }
 
   async deleteProduct(productId: number): Promise<void> {
-    await apiClient.delete(`/restaurant/products/${productId}`);
+    await apiClient.delete(`/restaurants/products/${productId}`);
   }
 
-  async toggleProductAvailability(productId: number, available: boolean): Promise<Product> {
-    const response = await apiClient.put(`/restaurant/products/${productId}/availability`, null, {
-      params: { available },
+  async toggleProductAvailability(productId: number, isAvailable: boolean): Promise<Product> {
+    const response = await apiClient.patch(`/restaurants/products/${productId}/availability`, null, {
+      params: { isAvailable },
     });
     return response.data;
   }

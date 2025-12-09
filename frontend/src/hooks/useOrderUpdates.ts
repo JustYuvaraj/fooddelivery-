@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import { Order, OrderStatus } from '@/types/api.types';
 import { toast } from 'react-hot-toast';

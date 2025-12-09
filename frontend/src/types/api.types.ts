@@ -34,6 +34,8 @@ export interface Restaurant {
   isAcceptingOrders: boolean;
   logoUrl?: string;
   bannerUrl?: string;
+  deliveryFee?: number;
+  estimatedDeliveryTime?: number;
 }
 
 export interface Product {
@@ -44,6 +46,7 @@ export interface Product {
   price: number;
   category: string;
   imageUrl?: string;
+  isVeg?: boolean;
   isAvailable: boolean;
   prepTimeMinutes?: number;
 }

@@ -60,9 +60,9 @@ const LoginPage = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-8">
           {/* Header */}
           <div className="text-center">
-            <div className="text-5xl mb-4">🍔</div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">FoodHub</h1>
-            <p className="text-gray-600">Sign in to your account</p>
+            <div className="text-5xl mb-4">🍽️</div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Home Kitchen</h1>
+            <p className="text-gray-600">Sign in to continue ordering</p>
           </div>
 
           {/* Form */}
@@ -121,12 +121,6 @@ const LoginPage = () => {
             Create new account
           </Link>
 
-          {/* Demo Credentials */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <p className="text-xs font-semibold text-blue-900 mb-2">Demo Credentials:</p>
-            <p className="text-xs text-blue-800">Email: <code className="bg-blue-100 px-1 rounded">customer@test.com</code></p>
-            <p className="text-xs text-blue-800">Password: <code className="bg-blue-100 px-1 rounded">password123</code></p>
-          </div>
         </div>
       </div>
     </div>

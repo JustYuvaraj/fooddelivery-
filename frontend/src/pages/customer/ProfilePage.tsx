@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import customerService from '@/services/customer.service';
 import { Address, ProfileDTO } from '@/types/api.types';
 import Button from '@/components/common/Button';
@@ -8,7 +7,6 @@ import { toast } from 'react-hot-toast';
 import { FiEdit2, FiTrash2, FiPlus, FiMapPin } from 'react-icons/fi';
 
 const ProfilePage = () => {
-  const { user } = useAuth();
   const [profile, setProfile] = useState<ProfileDTO | null>(null);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [loading, setLoading] = useState(true);

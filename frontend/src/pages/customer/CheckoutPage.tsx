@@ -5,7 +5,6 @@ import customerService from '@/services/customer.service';
 import orderService from '@/services/order.service';
 import { Address } from '@/types/api.types';
 import Button from '@/components/common/Button';
-import Input from '@/components/common/Input';
 import { toast } from 'react-hot-toast';
 import { FiMapPin, FiPlus } from 'react-icons/fi';
 

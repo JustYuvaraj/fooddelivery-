@@ -5,6 +5,7 @@ import { useOrderUpdates } from '@/hooks/useOrderUpdates';
 import { Order, OrderStatus } from '@/types/api.types';
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '@/utils/constants';
 import { FiCheckCircle, FiClock, FiPackage, FiTruck } from 'react-icons/fi';
+import { toast } from 'react-hot-toast';
 
 const OrderTrackingPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -53,6 +54,26 @@ const OrderTrackingPage = () => {
     const steps = getStatusSteps();
     return steps.findIndex((step) => step.status === status);
   };
+
+  const handleCancel = async () => {
+    if (!id || !canCancel) return;
+    if (!window.confirm('Are you sure you want to cancel this order?')) return;
+    try {
+      const updated = await orderService.cancelOrder(
+        Number(id),
+        'Customer requested cancellation'
+      );
+      setOrder(updated);
+      toast.success('Order cancelled');
+    } catch (error) {
+      console.error('Failed to cancel order', error);
+      toast.error('Failed to cancel order');
+    }
+  };
+
+  const canCancel = order
+    ? ['PLACED', 'CONFIRMED', 'PREPARING'].includes(order.status)
+    : false;
 
   if (loading || !order) {
     return (
@@ -116,6 +137,17 @@ const OrderTrackingPage = () => {
           })}
         </div>
       </div>
+
+      {canCancel && (
+        <div className="mt-6">
+          <button
+            onClick={handleCancel}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm font-semibold"
+          >
+            Cancel Order
+          </button>
+        </div>
+      )}
 
       {/* Order Details */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

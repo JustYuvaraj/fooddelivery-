@@ -9,7 +9,7 @@ interface RestaurantLayoutProps {
 }
 
 const RestaurantLayout: React.FC<RestaurantLayoutProps> = ({ children }) => {
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {

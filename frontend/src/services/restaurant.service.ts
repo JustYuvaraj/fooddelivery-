@@ -15,15 +15,15 @@ class RestaurantService {
   }
 
   async searchRestaurants(name: string, page = 0, size = 20) {
-    const response = await apiClient.get('/restaurants/search', {
+    const response = await apiClient.get('/restaurants/search/name', {
       params: { name, page, size },
     });
     return response.data;
   }
 
   async searchByCuisine(type: string, page = 0, size = 20) {
-    const response = await apiClient.get('/restaurants/cuisine', {
-      params: { type, page, size },
+    const response = await apiClient.get('/restaurants/search/cuisine', {
+      params: { cuisineType: type, page, size },
     });
     return response.data;
   }

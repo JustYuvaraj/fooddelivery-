@@ -5,7 +5,7 @@ import { FiPlus, FiMinus, FiTrash2, FiShoppingCart } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 const CartPage = () => {
-  const { items, restaurantId, updateQuantity, removeItem, getTotal, clearCart } = useCart();
+  const { items, updateQuantity, removeItem, getTotal, clearCart } = useCart();
 
   if (items.length === 0) {
     return (

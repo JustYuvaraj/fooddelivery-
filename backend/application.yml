@@ -1,12 +1,14 @@
 spring:
   application:
     name: fooddelivery-backend
+  main:
+    allow-bean-definition-overriding: true
   
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/fooddelivery}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:fooddelivery;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: org.h2.Driver
     hikari:
       maximum-pool-size: 20
       minimum-idle: 5
@@ -16,10 +18,10 @@ spring:
   
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
         use_sql_comments: true
         jdbc:
@@ -29,17 +31,22 @@ spring:
         order_updates: true
     show-sql: false
   
-  redis:
-    host: ${SPRING_REDIS_HOST:localhost}
-    port: ${SPRING_REDIS_PORT:6379}
-    password: ${SPRING_REDIS_PASSWORD:}
-    timeout: 2000ms
-    jedis:
-      pool:
-        max-active: 20
-        max-idle: 10
-        min-idle: 5
-        max-wait: -1ms
+  sql:
+    init:
+      mode: never
+  
+  # Redis temporarily disabled for development
+  # redis:
+  #   host: ${SPRING_REDIS_HOST:localhost}
+  #   port: ${SPRING_REDIS_PORT:6379}
+  #   password: ${SPRING_REDIS_PASSWORD:}
+  #   timeout: 2000ms
+  #   jedis:
+  #     pool:
+  #       max-active: 20
+  #       max-idle: 10
+  #       min-idle: 5
+  #       max-wait: -1ms
   
   security:
     oauth2:
@@ -55,7 +62,7 @@ spring:
 server:
   port: ${SERVER_PORT:8080}
   servlet:
-    context-path: ${SERVER_SERVLET_CONTEXT_PATH:/api}
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH:/}
   compression:
     enabled: true
     min-response-size: 1024

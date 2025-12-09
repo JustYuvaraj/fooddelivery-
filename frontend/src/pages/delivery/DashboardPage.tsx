@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import deliveryService from '@/services/delivery.service';
 import Button from '@/components/common/Button';
-import { FiPackage, FiTruck, FiCheckCircle } from 'react-icons/fi';
+import { FiTruck } from 'react-icons/fi';
 
 const DashboardPage = () => {
   const [isOnline, setIsOnline] = useState(false);

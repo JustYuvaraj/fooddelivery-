@@ -8,6 +8,7 @@ import { FiPlus, FiEdit2, FiTrash2, FiEye, FiEyeOff } from 'react-icons/fi';
 
 const MenuManagementPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [restaurantId, setRestaurantId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -22,12 +23,14 @@ const MenuManagementPage = () => {
   });
 
   useEffect(() => {
-    loadProducts();
+    loadInitialData();
   }, []);
 
-  const loadProducts = async () => {
+  const loadInitialData = async () => {
     try {
-      const data = await restaurantOwnerService.getProducts();
+      const restaurant = await restaurantOwnerService.getProfile();
+      setRestaurantId(restaurant.id);
+      const data = await restaurantOwnerService.getProducts(restaurant.id);
       setProducts(data);
       setLoading(false);
     } catch (error) {
@@ -38,6 +41,7 @@ const MenuManagementPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!restaurantId) return;
     try {
       if (editingProduct) {
         await restaurantOwnerService.updateProduct(editingProduct.id, {
@@ -47,14 +51,15 @@ const MenuManagementPage = () => {
         });
         toast.success('Product updated successfully');
       } else {
-        await restaurantOwnerService.createProduct({
+        await restaurantOwnerService.createProduct(restaurantId, {
           ...formData,
           price: Number(formData.price),
           prepTimeMinutes: formData.prepTimeMinutes ? Number(formData.prepTimeMinutes) : undefined,
         });
         toast.success('Product created successfully');
       }
-      loadProducts();
+      const data = await restaurantOwnerService.getProducts(restaurantId);
+      setProducts(data);
       resetForm();
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to save product');
@@ -67,7 +72,10 @@ const MenuManagementPage = () => {
     try {
       await restaurantOwnerService.deleteProduct(productId);
       toast.success('Product deleted');
-      loadProducts();
+      if (restaurantId) {
+        const data = await restaurantOwnerService.getProducts(restaurantId);
+        setProducts(data);
+      }
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Failed to delete product');
     }
@@ -77,7 +85,10 @@ const MenuManagementPage = () => {
     try {
       await restaurantOwnerService.toggleProductAvailability(product.id, !product.isAvailable);
       toast.success(`Product ${product.isAvailable ? 'disabled' : 'enabled'}`);
-      loadProducts();
+      if (restaurantId) {
+        const data = await restaurantOwnerService.getProducts(restaurantId);
+        setProducts(data);
+      }
     } catch (error: any) {
       toast.error('Failed to update availability');
     }

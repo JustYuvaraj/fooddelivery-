@@ -17,14 +17,11 @@ const OrderManagementPage = () => {
   const loadOrders = async () => {
     try {
       setLoading(true);
-      // Note: This endpoint needs to be implemented in backend
-      // For now using customer orders endpoint structure
-      const response = await fetch(`/api/v1/restaurant/orders?status=${filterStatus || ''}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      const data = await response.json();
+      const data = await orderService.getRestaurantOrders(
+        filterStatus || undefined,
+        0,
+        20
+      );
       setOrders(data.content || data);
     } catch (error) {
       console.error('Failed to load orders:', error);
@@ -35,12 +32,7 @@ const OrderManagementPage = () => {
 
   const handleUpdateStatus = async (orderId: number, newStatus: OrderStatus) => {
     try {
-      await fetch(`/api/v1/restaurant/orders/${orderId}/status?status=${newStatus}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      await orderService.updateOrderStatus(orderId, newStatus);
       toast.success('Order status updated');
       loadOrders();
     } catch (error: any) {

@@ -24,6 +24,7 @@ C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\config\Securi
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\model\entity\Order.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\customer\domain\dto\CreateAddressRequest.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\order\domain\event\OrderStatusChangedEvent.java
+C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\auth\application\AuthService.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\FoodDeliveryApplication.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\request\UpdateProductRequest.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\request\CreateOrderRequest.java
@@ -48,6 +49,7 @@ C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\order
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\response\AuthResponse.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\config\CorsConfig.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\security\JwtTokenProvider.java
+C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\auth\api\AuthController.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\request\UpdateProfileRequest.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\response\ReviewDTO.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\notification\domain\dto\NotificationDTO.java
@@ -86,8 +88,10 @@ C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\order
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\delivery\api\DeliveryController.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\modules\analytics\domain\dto\OrderStatisticsDTO.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\request\LoginRequest.java
+C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\exception\BadRequestException.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\exception\OrderNotFoundException.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\response\OrderItemDTO.java
+C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\response\UserDTO.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\repository\UserRepository.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\dto\response\ProfileDTO.java
 C:\Users\justy\fooddelivery\backend\src\main\java\com\fooddelivery\security\JwtAuthenticationEntryPoint.java

@@ -4,7 +4,6 @@ import deliveryService from '@/services/delivery.service';
 import { DeliveryAssignmentDTO } from '@/types/api.types';
 import Button from '@/components/common/Button';
 import { toast } from 'react-hot-toast';
-import { FiMapPin, FiDollarSign, FiClock } from 'react-icons/fi';
 
 const AvailableTasksPage = () => {
   const navigate = useNavigate();

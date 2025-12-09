@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import deliveryService from '@/services/delivery.service';
 import { DeliveryDetailsDTO } from '@/types/api.types';
-import { FiMapPin, FiNavigation } from 'react-icons/fi';
+import { FiNavigation } from 'react-icons/fi';
 
 const ActiveDeliveriesPage = () => {
   const [deliveries, setDeliveries] = useState<DeliveryDetailsDTO[]>([]);

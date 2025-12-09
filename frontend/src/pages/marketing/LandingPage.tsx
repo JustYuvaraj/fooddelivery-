@@ -7,17 +7,17 @@ const LandingPage: React.FC = () => {
       <div className="container mx-auto px-4 py-20">
         <div className="text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Food Delivery Made Easy
+            Home Kitchen
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Order from your favorite restaurants and get food delivered to your doorstep
+            Fresh, homemade food from our kitchen to your doorstep.
           </p>
           <div className="flex gap-4 justify-center">
             <Link
               to="/login"
               className="px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
             >
-              Get Started
+              Order Now
             </Link>
             <Link
               to="/register"
