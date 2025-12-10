@@ -2,15 +2,12 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import restaurantService from '@/services/restaurant.service';
 import { Restaurant } from '@/types/api.types';
-import { FiSearch, FiStar, FiClock, FiMapPin, FiFilter, FiTruck, FiTag } from 'react-icons/fi';
+import { FiSearch, FiStar, FiClock, FiMapPin } from 'react-icons/fi';
 
 const RestaurantListPage = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCuisine, setSelectedCuisine] = useState('');
-  const [priceRange, setPriceRange] = useState('');
-  const [sortBy, setSortBy] = useState('rating');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,41 +48,6 @@ const RestaurantListPage = () => {
       setLoading(false);
     }
   };
-
-  const filterRestaurants = () => {
-    let filtered = restaurants;
-    
-    if (selectedCuisine) {
-      filtered = filtered.filter(r => r.cuisineType?.toLowerCase().includes(selectedCuisine.toLowerCase()));
-    }
-    
-    if (priceRange) {
-      const [min, max] = priceRange.split('-').map(Number);
-      filtered = filtered.filter(r => {
-        const avgPrice = (r.minOrderAmount || 0);
-        return avgPrice >= min && avgPrice <= max;
-      });
-    }
-    
-    // Sort
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'rating':
-          return b.rating - a.rating;
-        case 'delivery':
-          return (a.deliveryFee || 0) - (b.deliveryFee || 0);
-        case 'time':
-          return (a.estimatedDeliveryTime || 0) - (b.estimatedDeliveryTime || 0);
-        default:
-          return 0;
-      }
-    });
-    
-    return filtered;
-  };
-
-  const cuisineTypes = ['Italian', 'Chinese', 'Indian', 'Mexican', 'American', 'Japanese', 'Thai'];
-  const priceRanges = ['0-200', '200-500', '500-1000', '1000+'];
 
   if (loading) {
     return (

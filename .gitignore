@@ -41,3 +41,5 @@ start-frontend.ps1
 run-server.ps1
 start-backend.bat
 RUN_NOW.bat
+backend/aws/
+backend/awscliv2.zip
